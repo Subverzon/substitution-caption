@@ -50,3 +50,5 @@ function autoPlay() {
         animation.animateOut();
     }, 5000);
 }
+
+autoPlay();
