@@ -42,3 +42,11 @@ function play() {
 function stop() {
     animation.animateOut();
 }
+
+// Load and animate Caption then animate out after 5 seconds
+function autoPlay() {
+    loadAndAnimate();
+    setTimeout(() => {
+        animation.animateOut();
+    }, 5000);
+}

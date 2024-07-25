@@ -2,10 +2,10 @@ const electronInstaller = require('electron-winstaller');
 
 // Installer settings
 let settings = {
-    appDirectory: './dist/subverzon-win32-x64',
+    appDirectory: './substitution-caption-win32-x64',
     outputDirectory: './dist/installer',
-    authors: 'SubVerzon',
-    exe: 'subverzon.exe'
+    authors: 'Shuvanshu Kishor',
+    exe: 'substitution-caption.exe'
 }
 
 // Create windows installer with settings

@@ -1,10 +1,10 @@
 {
-  "name": "subverzon",
+  "name": "substitution-caption",
   "version": "1.0.0",
   "main": "main/index.js",
   "scripts": {
     "start": "electron .",
-    "pack": "electron-packager . --icon=assets/brisk.ico --platform=win32 --arch=x64",
+    "pack": "electron-packager . --icon=assets/brisk.ico --platform=win32 --arch=x64 --out=dist --overwrite",
     "build": "node build/build.js"
   },
   "keywords": [],
