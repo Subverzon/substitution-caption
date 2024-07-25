@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Data Panel</title>
+</head>
+<body>
+    <div class="card-container">
+        <div class="crud-container">
+            <!-- Create Team -->
+            <div class="create-team card">
+                <h1>Create Team</h1>
+                <input type="text" id="team-name" placeholder="Team Name">
+                <input type="text" id="team-tricode" placeholder="Team Tricode">
+                <button id="create-team">Create</button>
+            </div>
+            <!-- Create Player -->
+            <div class="create-player card">
+                <h1>Create Player</h1>
+                <select id="player-team" class="team-dropdown">
+                    <option value="" disabled selected>Select Team</option>
+                </select>
+                <input type="text" id="player-name" placeholder="Player Name">
+                <input type="number" id="player-number" placeholder="Player Number">
+                <button id="create-player">Create</button>
+            </div>
+        </div>
+    </div>
+    <!-- Loading Animation -->
+    <div id="loading">
+        <div class="loader"></div>
+    </div>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="index.js"></script>
+</body>
+</html>

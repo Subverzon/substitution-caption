@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/dashboard.css">
+    <title>Fifa - Dashboard</title>
+</head>
+<body>
+    <div class="datalink">
+        <h1>Substitution Caption</h1>
+        <div class="update-container">
+            <label for="live-udpate">Live Update</label>
+            <input class="checkbox" id="live-udpate" type="checkbox">
+        </div>
+        <div>
+            <label for="team-name">Team Name</label>
+            <select name="team-name" onchange="updatePlayers()">
+                <option value="" selected disabled>Select Team</option>
+            </select>
+        </div>
+        <div>
+            <label for="player-in">Player IN</label>
+            <select name="player-in">
+                <option value="" selected disabled>Select Player</option>
+            </select>
+        </div>
+        <div>
+            <label for="player-out">Player OUT</label>
+            <select name="player-out">
+                <option value="" selected disabled>Select Player</option>
+            </select>
+        </div>
+        <div>
+            <label for="time">Time</label>
+            <div class="time-container">
+                <input type="number" min="0" name="minutes" placeholder="Enter Min">
+                :
+                <input type="number" min="0" max="60" name="seconds" placeholder="Enter Sec">
+            </div>
+        </div>
+        <button id="submit-datalink">Submit</button>
+    </div>
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+        const socket = io ('/');
+        let teams = [];
+        let players = [];
+
+        // Submit data link and update the caption
+        document.getElementById('submit-datalink').addEventListener('click', () => {
+            const team = document.querySelector('select[name="team-name"]').value;
+            const playerIn = document.querySelector('select[name="player-in"]').value;
+            const playerOut = document.querySelector('select[name="player-out"]').value;
+            const minutes = document.querySelector('input[name="minutes"]').value;
+            const seconds = document.querySelector('input[name="seconds"]').value;
+            const liveUpdate = document.getElementById('live-udpate').checked;
+            if (!team || !playerIn || !playerOut || !minutes || !seconds) {
+                alert('Please fill all fields');
+                return;
+            }
+            // Find team, playerIn and playerOut data
+            const teamData = teams.find((t) => t._id == team);
+            const playerInData = players.find((player) => player._id == playerIn);
+            const playerOutData = players.find((player) => player._id == playerOut);
+            socket.emit('datalink', 
+                {
+                    action: 'update',
+                    bundle: 'fifa',
+                    page: 'substitution-caption',
+                    liveUpdate,
+                    data: {
+                        tricode: teamData.tricode,
+                        playerIn: {
+                            name: playerInData.name,
+                            number: playerInData.number
+                        },
+                        playerOut: {
+                            name: playerOutData.name,
+                            number: playerOutData.number
+                        },
+                        // Time format: MM:SS
+                        time: `${padLeft(parseInt(minutes), '0', 2)}:${padLeft(parseInt(seconds), '0', 2)}`
+                    }
+                },
+                (response) => {
+                    if (response.status === 'success') {
+                        alert('Data updated successfully');
+                    } else {
+                        alert('Data update failed');
+                    }
+                }
+            );
+        });
+
+        // Get all teams from database and populate team select
+        socket.emit('crud',
+            {
+                action: 'read',
+                model: 'team',
+                options: {},
+                selection: '',
+                population: ''
+            },
+            (response) => {
+                if (response.status === 'success') {
+                    teams = response.data;
+                    const teamNameSelect = document.querySelector('select[name="team-name"]');
+                    teams.forEach((team) => {
+                        const option = document.createElement('option');
+                        option.value = team._id;
+                        option.textContent = team.name;
+                        teamNameSelect.appendChild(option);
+                    });
+                }
+            }
+        )
+        
+        // Get players of selected team from database and populate player select
+        function updatePlayers() {
+            const team = document.querySelector('select[name="team-name"]').value;
+            socket.emit(
+                'crud',
+                {
+                    action: 'read',
+                    model: 'player',
+                    options: {team},
+                    selection: '',
+                    population: ''
+                },
+                (response) => {
+                    if (response.status === 'success') {
+                        players = response.data;
+                        const playerInSelect = document.querySelector('select[name="player-in"]');
+                        const playerOutSelect = document.querySelector('select[name="player-out"]');
+                        playerInSelect.innerHTML = '<option value="" selected disabled>Select Player</option>';
+                        playerOutSelect.innerHTML = '<option value="" selected disabled>Select Player</option>';
+                        players.forEach((player) => {
+                            const optionIn = document.createElement('option');
+                            const optionOut = document.createElement('option');
+                            optionIn.value = player._id;
+                            optionIn.textContent = player.name + ' (#' + player.number + ')';
+                            optionOut.value = player._id;
+                            optionOut.textContent = player.name + ' (#' + player.number + ')';
+                            playerInSelect.appendChild(optionIn);
+                            playerOutSelect.appendChild(optionOut);
+                        });
+                    }
+                }
+            )
+        }
+
+        // Pad left with character
+        function padLeft(str, pad, length) {
+            return (new Array(length + 1).join(pad) + str).slice(-length);
+        }
+    </script>
+</body>
+</html>

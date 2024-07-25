@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/style.css">
+    <title>Substitution Caption</title>
+</head>
+<body>
+    <div class="caption-container">
+        <div class="header-card">
+            <div class="team-name">
+                ARG
+            </div>
+            <h1>Substitute</h1>
+            <div class="highlight-card" id="substitution-time">
+                45:00
+            </div>
+        </div>
+        <div class="player-card" id="playerIn">
+            <div class="player-number" id="playerInNumber">
+                13
+            </div>
+            <h1 id="playerInName">Player A</h1>
+            <div class="highlight-card"
+                style="background-color: #4CAF50;"
+            >
+                IN
+            </div>
+        </div>
+        <div class="player-card" id="playerOut">
+            <div class="highlight-card"
+                style="background-color: #F44336;"
+            >
+                OUT
+            </div>
+            <h1 id="playerOutName">Player B</h1>
+            <div class="player-number" id="playerOutNumber">
+                45
+            </div>
+        </div>
+    </div>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="js/index.js"></script>
+    <script src="js/animation.js"></script>
+</body>
+</html>

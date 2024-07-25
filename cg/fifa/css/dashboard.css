@@ -1,0 +1,72 @@
+body {
+    margin: 0;
+}
+
+h1 {
+    font-family: 'Roboto';
+    text-align: center;
+    margin: 0;
+    padding-bottom: 20px;
+}
+
+@font-face {
+    font-family: 'Roboto';
+    src: url('../assets/fonts/Roboto-Regular.ttf');
+}
+
+.datalink {
+    border: 2px solid #000;
+    border-radius: 20px;
+    width: max-content;
+    padding: 10px 20px;
+    margin: 10px;
+    font-family: 'Roboto';
+}
+
+input {
+    width: calc(100% - 10px);
+    padding: 5px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    border: 1px solid #000;
+}
+
+select {
+    width: 100%;
+    padding: 5px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    border: 1px solid #000;
+}
+
+button {
+    padding: 5px 10px;
+    border-radius: 5px;
+    border: 1px solid #000;
+    background-color: #000;
+    color: #fff;
+    cursor: pointer;
+}
+
+label {
+    font-weight: bold;
+
+}
+
+.time-container {
+    display: flex;
+    justify-content: space-between;
+}
+
+.update-container {
+    display: flex;
+    justify-content: flex-start;
+    margin-bottom: 20px;
+    column-gap: 15px;
+}
+
+.checkbox {
+    height: 20px;
+    width: 20px;
+    margin: 0;
+}
