@@ -95,6 +95,13 @@ CG [channel: int]-[layer: int] STOP
 CG 1-1 STOP
 ```
 
+### CasparCG Client
+
+CasparCG Client - [Download CasparCG Client](https://casparcg.com/docs/downloads/server-client).
+
+Use CasparCG Client to load and play the caption.
+
+
 ## Building the project
 
 To build the project first install electron-packager.
